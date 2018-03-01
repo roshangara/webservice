@@ -1,0 +1,42 @@
+{
+  "name": "roshangara/webservice",
+  "description": "package for request to another server",
+  "homepage": "https://github.com/roshangara/webservice",
+  "keywords": [
+    "laravel",
+    "lumen",
+    "roshangara",
+    "webservice"
+  ],
+  "support": {
+    "issues": "https://github.com/roshangara/webservice/issues",
+    "source": "https://github.com/roshangara/webservice"
+  },
+  "require": {
+    "php": ">=7.0",
+    "illuminate/support": "^5.0",
+    "illuminate/database": "^5.0",
+    "roshangara/parser": "dev-master"
+  },
+  "autoload": {
+    "psr-4": {
+      "Roshangara\\Webservice\\": "src"
+    }
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Roshangara\\Webservice\\WebserviceServiceProvider"
+      ]
+    }
+  },
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Mohammad Taghikhani",
+      "email": "mroshangara@gmail.com",
+      "homepage": "http://roshangara.ir"
+    }
+  ],
+  "minimum-stability": "dev"
+}
