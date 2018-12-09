@@ -29,7 +29,7 @@ class RestSender extends Sender
         $this->webservice->setStatus(Webservice::SEND);
 
         // get data from webservice
-        $this->webservice->setResponse(curl_exec($this->client));
+        $this->webservice->setResponse(iconv('WINDOWS-1256', 'UTF-8', curl_exec($this->client)));
 
         // set receive status
         $this->webservice->setStatus(Webservice::RECEIVE);
@@ -55,12 +55,13 @@ class RestSender extends Sender
     protected function handleMethod()
     {
         $this->webservice
-            ->setOption(CURLOPT_URL, $this->getUrl() . '?' . http_build_query($this->webservice->getParams()));
+            ->setOption(CURLOPT_URL, $this->getUrl() . '?' . http_build_query($this->webservice->getParams()))
+            ->setOption(CURLOPT_HTTPHEADER, $this->webservice->getHeaders());;
 
         if ($this->webservice->getMethod() != 'GET')
             $this->webservice
                 ->setOption(CURLOPT_CUSTOMREQUEST, $this->webservice->getMethod())
-                ->setOption(CURLOPT_POSTFIELDS, $this->webservice->getParams());
+                ->setOption(CURLOPT_POSTFIELDS, http_build_query($this->webservice->getParams()));
     }
 
     /**
@@ -91,7 +92,7 @@ class RestSender extends Sender
     {
         return $this->webservice->getOptions() + [
                 CURLOPT_RETURNTRANSFER => 1,
-                CURLOPT_SSL_VERIFYPEER => false
+                CURLOPT_SSL_VERIFYPEER => false,
             ];
     }
 
@@ -101,9 +102,10 @@ class RestSender extends Sender
      */
     protected function checkFault()
     {
-        if (0 !== curl_errno($this->client) or curl_getinfo($this->client, CURLINFO_HTTP_CODE) > 400)
+        if (0 !== curl_errno($this->client) or curl_getinfo($this->client, CURLINFO_HTTP_CODE) > 400) {
             $this->webservice->setStatus(Webservice::FAULT);
-        else
+            $this->webservice->setError(curl_error($this->client));
+        } else
             $this->webservice->setStatus(Webservice::SUCCESS);
     }
 }

@@ -22,6 +22,7 @@ class CreateWebserviceRequestsTable extends Migration
             $table->string('url');
             $table->string('sender');
 
+            $table->softDeletes();
             $table->timestamps();
         });
     }

@@ -8,14 +8,16 @@ namespace Roshangara\Webservice;
  */
 class SoapSender extends Sender
 {
+
+    protected $client;
     /**
      * Soap default options
      *
      * @return array
      */
     protected $defaultOptions = [
-        'trace'              => 1,
-        'exceptions'         => 1,
+        'trace' => 1,
+        'exceptions' => 1,
         'connection_timeout' => 30,
     ];
 
@@ -28,6 +30,7 @@ class SoapSender extends Sender
     {
 
         try {
+
             // open connection
             $this->client = new CurlSoapClient($this->webservice->getUrl(), $this->webservice->getOptions());
 
@@ -55,7 +58,8 @@ class SoapSender extends Sender
         } catch (\Exception $soapFault) {
 
             $this->webservice->setStatus(Webservice::FAULT);
-            $this->webservice->setResult($soapFault->getMessage());
+            $this->webservice->setError($soapFault->getMessage());
+
         }
 
         return $this->webservice->getResult();

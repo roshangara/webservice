@@ -34,7 +34,7 @@ class Webservice extends BaseWebservice
     public $totalTime;
 
     /**
-     * Excepted params
+     * Excepted Params
      *
      * @var array
      */
@@ -42,11 +42,10 @@ class Webservice extends BaseWebservice
 
     /**
      * Webservice constructor.
-     * @param Parser $parser
      */
-    public function __construct(Parser $parser = null)
+    public function __construct()
     {
-        $this->parser = $parser;
+        $this->parser = new Parser();
 
         $this->startTime = microtime(true);
     }
@@ -69,7 +68,7 @@ class Webservice extends BaseWebservice
      */
     public static function registerSender($name, $class)
     {
-        static::$senders [ $name ] = $class;
+        static::$senders [$name] = $class;
     }
 
     /**
@@ -78,16 +77,24 @@ class Webservice extends BaseWebservice
      */
     public function send()
     {
+
         $this->beforeSend();
 
-        (new static::$senders[ $this->protocol ]($this))->send();
+        (new static::$senders[$this->protocol]($this))->send();
+
 
         if (method_exists($this->parser, "from$this->parseFrom")) {
 
             $this->result = $this->parser->{"from$this->parseFrom"}($this->getResponse());
+
         }
 
         $this->afterSend();
+
+        $afterName = "after" . ucfirst($this->function);
+        if (method_exists($this, $afterName)) {
+            $this->{"$afterName"}();
+        }
 
         return $this->getResult();
     }
@@ -105,8 +112,11 @@ class Webservice extends BaseWebservice
      */
     protected function afterSend()
     {
+
         $this->totalTime = round(microtime(true) - $this->startTime, 3);
+
         event(new AfterSend($this));
+
     }
 
     /**
@@ -117,34 +127,19 @@ class Webservice extends BaseWebservice
     {
         return [
             'protocol' => $this->getProtocol(),
-            'url'      => $this->getUrl(),
-            'method'   => $this->getMethod(),
+            'url' => $this->getUrl(),
+            'method' => $this->getMethod(),
             'function' => $this->getFunction(),
-            'params'   => array_except($this->getParams(), $this->getExceptedParams()),
-            'status'   => $this->getStatus(),
+            'params' => $this->getParams(),
+            'status' => $this->getStatus(),
             'response' => $this->getResponse(),
-            'result'   => $this->getResult(),
-            'info'     => $this->getInfo(),
+            'result' => $this->getResult(),
+            'info' => $this->getInfo(),
         ];
     }
 
-    /**
-     * @return $this
-     */
-    public function newInstance()
+    public function renderView(string $view, array $options)
     {
-        return new $this;
-    }
-
-    /**
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function resultOrError()
-    {
-        if ($this->hasError()) {
-            return response()->json($this->toArray(), 500);
-        }
-
-        return response()->json($this->getResult());
+        return view($view, $options);
     }
 }

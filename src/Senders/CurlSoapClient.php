@@ -10,12 +10,6 @@ class CurlSoapClient extends SoapClient
     public $curl;
 
 
-    /**
-     * @param $url
-     * @param $data
-     * @param $action
-     * @return mixed
-     */
     protected function callCurl($url, $data, $action)
     {
         $this->curl = curl_init();
@@ -33,14 +27,6 @@ class CurlSoapClient extends SoapClient
         return $content;
     }
 
-    /**
-     * @param string $request
-     * @param string $location
-     * @param string $action
-     * @param int $version
-     * @param int $one_way
-     * @return mixed
-     */
     public function __doRequest($request, $location, $action, $version, $one_way = 0)
     {
         return $this->callCurl($location, $request, $action);
@@ -59,11 +45,11 @@ class CurlSoapClient extends SoapClient
         $options = [
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_SSL_VERIFYPEER => false,
-            CURLOPT_FRESH_CONNECT  => true,
-            CURLOPT_HEADER         => true,
-            CURLOPT_URL            => $url,
-            CURLOPT_POSTFIELDS     => $data,
-            CURLOPT_HTTPHEADER     => ["Content-Type: text/xml", 'SOAPAction: "' . $action . '"'],
+            CURLOPT_FRESH_CONNECT => true,
+            CURLOPT_HEADER => true,
+            CURLOPT_URL => $url,
+            CURLOPT_POSTFIELDS => $data,
+            CURLOPT_HTTPHEADER => ["Content-Type: text/xml", 'SOAPAction: "' . $action . '"'],
         ];
 
         return $options;

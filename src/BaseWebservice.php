@@ -71,7 +71,7 @@ abstract class BaseWebservice
      *
      * @return string
      */
-    protected $parseFrom = 'Json';
+    protected $parseFrom = 'json';
 
     /**
      * Result
@@ -95,6 +95,20 @@ abstract class BaseWebservice
     public $group;
 
     /**
+     * Headers
+     *
+     * @return array
+     */
+    public $headers = [];
+
+    /**
+     * Errors
+     *
+     * @return array
+     */
+    public $errors = [];
+
+    /**
      * Set option
      *
      * @param $key
@@ -104,7 +118,7 @@ abstract class BaseWebservice
      */
     public function setOption($key, $value)
     {
-        $this->options[ $key ] = $value;
+        $this->options[$key] = $value;
 
         return $this;
     }
@@ -119,7 +133,7 @@ abstract class BaseWebservice
      */
     public function setParam($key, $value)
     {
-        $this->params[ $key ] = $value;
+        $this->params[$key] = $value;
 
         return $this;
     }
@@ -358,11 +372,65 @@ abstract class BaseWebservice
         $this->result = $result;
     }
 
-    /**
-     * @return bool
-     */
     public function hasError()
     {
         return $this->status != self::SUCCESS;
+    }
+
+    /**
+     * @return array
+     */
+    public function getHeaders(): array
+    {
+        return $this->headers;
+    }
+
+    /**
+     * @param array $headers
+     * @return $this
+     */
+    public function setHeaders(array $headers)
+    {
+        $this->headers = $headers;
+
+        return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getErrors()
+    {
+        return $this->errors;
+    }
+
+    /**
+     * @param $errors
+     * @return $this
+     */
+    public function setErrors($errors)
+    {
+        $this->errors = $errors;
+
+        return $this;
+    }
+
+    /**
+     * @param $error
+     * @return $this
+     */
+    public function setError($error)
+    {
+        $this->errors[] = $error;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function newInstance()
+    {
+        return new $this;
     }
 }

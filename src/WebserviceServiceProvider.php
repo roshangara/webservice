@@ -3,20 +3,10 @@
 namespace Roshangara\Webservice;
 
 use Illuminate\Contracts\Events\Dispatcher;
-use Roshangara\Parser\Parser;
 
 class WebserviceServiceProvider extends \Illuminate\Support\ServiceProvider
 {
-    /**
-     * All of the event / listener mappings.
-     *
-     * @var array
-     */
-    protected $events = [
-        AfterSend::class => [
-            SaveInformation::class,
-        ],
-    ];
+    use EventMap;
 
     /**
      * Bootstrap any application services.
@@ -26,18 +16,18 @@ class WebserviceServiceProvider extends \Illuminate\Support\ServiceProvider
     public function boot()
     {
         $this->registerEvents();
-        $this->loadMigrationsFrom(__DIR__ . '/../migrations');
+        $this->registerMigrations();
     }
 
     public function register()
     {
         $this->app->bind(Webservice::class, function () {
-            return new Webservice(new Parser());
+            return new Webservice();
         });
     }
 
     /**
-     * Register events.
+     * Register the Horizon job events.
      *
      * @return void
      */
@@ -50,5 +40,10 @@ class WebserviceServiceProvider extends \Illuminate\Support\ServiceProvider
                 $events->listen($event, $listener);
             }
         }
+    }
+
+    protected function registerMigrations()
+    {
+        $this->loadMigrationsFrom(__DIR__ . '/../migrations');
     }
 }
