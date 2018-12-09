@@ -16,7 +16,10 @@
     "php": ">=7.0",
     "illuminate/support": "^5.0",
     "illuminate/database": "^5.0",
-    "roshangara/parser": "dev-master"
+    "roshangara/parser": "dev-master",
+    "ext-soap": "*",
+    "ext-curl": "*",
+    "ext-iconv": "*"
   },
   "autoload": {
     "psr-4": {
