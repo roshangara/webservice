@@ -9,5 +9,6 @@ class AfterSend
     public function __construct($webservice)
     {
         $this->webservice = $webservice;
+        $this->webservice->setResponse(utf8_encode($this->webservice->getResponse()));
     }
 }
