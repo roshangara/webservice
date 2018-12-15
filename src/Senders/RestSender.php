@@ -29,7 +29,7 @@ class RestSender extends Sender
         $this->webservice->setStatus(Webservice::SEND);
 
         // get data from webservice
-        $this->webservice->setResponse(iconv('WINDOWS-1256', 'UTF-8', curl_exec($this->client)));
+        $this->webservice->setResponse(curl_exec($this->client));
 
         // set receive status
         $this->webservice->setStatus(Webservice::RECEIVE);
