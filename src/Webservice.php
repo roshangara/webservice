@@ -135,6 +135,7 @@ class Webservice extends BaseWebservice
             'response' => $this->getResponse(),
             'result' => $this->getResult(),
             'info' => $this->getInfo(),
+            'errors' => $this->getErrors(),
         ];
     }
 
