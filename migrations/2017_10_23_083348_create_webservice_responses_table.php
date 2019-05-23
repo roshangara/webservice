@@ -13,7 +13,7 @@ class CreateWebserviceResponsesTable extends Migration
             $table->increments('id');
 
             $table->integer('request_id')->unsigned();
-            $table->integer('user_id')->unsigned()->nullable();
+            $table->bigInteger('user_id')->unsigned()->nullable();
 
             $table->enum('status', ['INIT', 'SEND', 'RECEIVE', 'FAULT', 'SUCCESS'])->default('INIT');
             $table->json('params')->nullable();
