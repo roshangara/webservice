@@ -32,6 +32,13 @@ abstract class BaseWebservice
     protected $params = [];
 
     /**
+     * body
+     *
+     * @return string
+     */
+    protected $body = null;
+
+    /**
      * Method type
      *
      * @return string
@@ -206,6 +213,30 @@ abstract class BaseWebservice
     public function setParams(array $params)
     {
         $this->params += $params;
+
+        return $this;
+    }
+
+    /**
+     * Get array params
+     *
+     * @return array
+     */
+    public function getBody()
+    {
+        return $this->body;
+    }
+
+    /**
+     * Set params
+     *
+     * @param array $params
+     *
+     * @return $this
+     */
+    public function setBody($body)
+    {
+        $this->body = $body;
 
         return $this;
     }
