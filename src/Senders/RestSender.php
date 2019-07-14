@@ -61,7 +61,7 @@ class RestSender extends Sender
         if ($this->webservice->getMethod() != 'GET')
             $this->webservice
                 ->setOption(CURLOPT_CUSTOMREQUEST, $this->webservice->getMethod())
-                ->setOption(CURLOPT_POSTFIELDS, http_build_query($this->webservice->getParams()));
+                ->setOption(CURLOPT_POSTFIELDS, $this->webservice->getBody() ?: http_build_query($this->webservice->getParams()));
     }
 
     /**
