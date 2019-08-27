@@ -54,13 +54,13 @@ class SaveInformation implements ShouldQueue
         return array_filter(array_except([
             'status'          => $this->webservice->getStatus(),
             'params'          => array_except($this->webservice->getParams(), $this->webservice->getExceptedParams()),
-            'errors' => $this->webservice->getErrors(),
+            'errors'          => $this->webservice->getErrors(),
             'response'        => is_object($this->webservice->getResponse()) ? serialize($this->webservice->getResponse()) : $this->webservice->getResponse(),
             'total_time'      => $this->webservice->totalTime,
             'parsed_response' => $this->webservice->getResult(),
             'info'            => $this->webservice->getInfo(),
             'headers'         => $this->webservice->getOptions(),
-            'user_id' => auth()->check() ? auth()->user()->id : null,
+            'user_id'         => function_exists('auth') and auth()->check() ? auth()->user()->id : null,
             'related_id'      => null,
         ], $except));
     }
