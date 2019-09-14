@@ -31,7 +31,6 @@ class CreateWebserviceResponsesTable extends Migration
 
             $table->foreign('related_id')->references('id')->on('webservice_responses');
             $table->foreign('request_id')->references('id')->on('webservice_requests');
-            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 
