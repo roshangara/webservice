@@ -23,6 +23,13 @@ class SaveInformation implements ShouldQueue
         $this->save();
     }
 
+    protected function arrayExclude($array, Array $excludeKeys){
+        foreach($excludeKeys as $key){
+            unset($array[$key]);
+        }
+        return $array;
+    }
+
     /**
      * Get Request array
      *
@@ -31,7 +38,7 @@ class SaveInformation implements ShouldQueue
      */
     public function getRequestArray($except = []): array
     {
-        return array_filter(array_except([
+        return array_filter($this->arrayExclude([
             'group'       => @$this->webservice->group ?: null,
             'class'       => class_basename($this->webservice),
             'function'    => $this->webservice->getFunction(),
@@ -51,9 +58,9 @@ class SaveInformation implements ShouldQueue
      */
     public function getResponseArray($except = []): array
     {
-        return array_filter(array_except([
+        return array_filter($this->arrayExclude([
             'status'          => $this->webservice->getStatus(),
-            'params'          => array_except($this->webservice->getParams(), $this->webservice->getExceptedParams()),
+            'params'          => $this->arrayExclude($this->webservice->getParams(), $this->webservice->getExceptedParams()),
             'errors'          => $this->webservice->getErrors(),
             'response'        => is_object($this->webservice->getResponse()) ? serialize($this->webservice->getResponse()) : $this->webservice->getResponse(),
             'total_time'      => $this->webservice->totalTime,
