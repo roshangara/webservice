@@ -20,7 +20,8 @@ class CreateWebserviceRequestsTable extends Migration
             $table->string('url');
             $table->string('sender');
             $table->softDeletes();
-            $table->timestamps();
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->useCurrent();
         });
     }
 

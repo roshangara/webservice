@@ -6,6 +6,10 @@ class AfterSend
 {
     public $webservice;
 
+    /**
+     * AfterSend constructor.
+     * @param $webservice
+     */
     public function __construct($webservice)
     {
         $this->webservice = $webservice;

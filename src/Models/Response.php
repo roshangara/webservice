@@ -21,8 +21,9 @@ class Response extends Model
         'headers',
         'related_id',
         'user_id',
-        'updated_at',
-        'errors'
+        'errors',
+        'created_at',
+        'updated_at'
     ];
 
     protected $casts = [
