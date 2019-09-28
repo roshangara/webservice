@@ -9,15 +9,13 @@ namespace Roshangara\Webservice;
 abstract class Sender
 {
     /**
-     * Sender
-     *
+     * Sender.
      * @return mixed
      */
     protected $client;
 
     /**
-     * Type
-     *
+     * Type.
      * @return Webservice
      */
     protected $webservice;

@@ -11,92 +11,81 @@ abstract class BaseWebservice
     const SUCCESS = 'SUCCESS';
 
     /**
-     * Server url
-     *
+     * Endpoint url.
      * @return string
      */
     protected $url;
 
     /**
-     * Function name
-     *
+     * Function name.
      * @return string
      */
     protected $function;
 
     /**
-     * Params
-     *
+     * Params list.
      * @return array
      */
     protected $params = [];
 
     /**
-     * body
-     *
+     * Body value.
      * @return string
      */
     protected $body = null;
 
     /**
-     * Method type
-     *
+     * Method type.
+     * Default method is get.
      * @return string
      */
     protected $method = 'GET';
 
     /**
-     * Server returned data
-     *
+     * Request response.
      * @return mixed
      */
     protected $response;
 
     /**
      * Log information's
-     *
      * @return string
      */
     protected $info;
 
     /**
-     * Status
-     *
+     * Request status.
      * @return string
      */
     protected $status = self::INIT;
 
     /**
-     * Type
-     *
+     * Protocol type.
+     * Default: Rest.
      * @return string
      */
     protected $protocol = 'Rest';
 
     /**
-     * Content Type
-     *
+     * Content Type.
      * @return string
      */
     protected $parseFrom = 'json';
 
     /**
-     * Result
-     *
+     * Result.
      * @var array
      */
     protected $result;
 
     /**
-     * Sender options
-     *
+     * Sender options.
      * @return array
      */
     protected $options = [];
 
     /**
-     * Group
-     *
+     * Group.
      * @return string
      */
     public $group;
@@ -109,18 +98,15 @@ abstract class BaseWebservice
     public $headers = [];
 
     /**
-     * Errors
-     *
+     * Errors.
      * @return array
      */
     public $errors = [];
 
     /**
      * Set option
-     *
      * @param $key
      * @param $value
-     *
      * @return $this
      */
     public function setOption($key, $value)
@@ -131,23 +117,19 @@ abstract class BaseWebservice
     }
 
     /**
-     * Set params
-     *
+     * Set params.
      * @param $key
      * @param $value
-     *
      * @return $this
      */
     public function setParam($key, $value)
     {
         $this->params[$key] = $value;
-
         return $this;
     }
 
     /**
-     * Get url
-     *
+     * Get url.
      * @return string
      */
     public function getUrl(): string
@@ -156,22 +138,18 @@ abstract class BaseWebservice
     }
 
     /**
-     * Set url
-     *
+     * Set url.
      * @param string $url
-     *
      * @return $this
      */
     public function setUrl(string $url)
     {
         $this->url = $url;
-
         return $this;
     }
 
     /**
-     * Get function name
-     *
+     * Get function name.
      * @return string
      */
     public function getFunction(): string
@@ -180,22 +158,18 @@ abstract class BaseWebservice
     }
 
     /**
-     * Set function
-     *
+     * Set function value.
      * @param string $function
-     *
      * @return $this
      */
     public function setFunction(string $function)
     {
         $this->function = $function;
-
         return $this;
     }
 
     /**
-     * Get array params
-     *
+     * Get param list.
      * @return array
      */
     public function getParams(): array
@@ -204,22 +178,18 @@ abstract class BaseWebservice
     }
 
     /**
-     * Set params
-     *
+     * Set params.
      * @param array $params
-     *
      * @return $this
      */
     public function setParams(array $params)
     {
         $this->params += $params;
-
         return $this;
     }
 
     /**
      * Get array params
-     *
      * @return array
      */
     public function getBody()
@@ -228,22 +198,18 @@ abstract class BaseWebservice
     }
 
     /**
-     * Set params
-     *
-     * @param array $params
-     *
+     * Set body.
+     * @param $body
      * @return $this
      */
     public function setBody($body)
     {
         $this->body = $body;
-
         return $this;
     }
 
     /**
-     * Get methods name
-     *
+     * Get method name.
      * @return string
      */
     public function getMethod(): string
@@ -252,22 +218,18 @@ abstract class BaseWebservice
     }
 
     /**
-     * Set method
-     *
+     * Set method name.
      * @param string $method
-     *
      * @return $this
      */
     public function setMethod(string $method)
     {
         $this->method = strtoupper($method);
-
         return $this;
     }
 
     /**
      * Get options
-     *
      * @return array
      */
     public function getOptions(): array
@@ -276,8 +238,7 @@ abstract class BaseWebservice
     }
 
     /**
-     * Get status
-     *
+     * Get status.
      * @return mixed
      */
     public function getStatus()
@@ -286,8 +247,7 @@ abstract class BaseWebservice
     }
 
     /**
-     * Set status
-     *
+     * Set status.
      * @param mixed $status
      */
     public function setStatus(string $status)
@@ -296,8 +256,7 @@ abstract class BaseWebservice
     }
 
     /**
-     * Get info
-     *
+     * Get info.
      * @return mixed
      */
     public function getInfo()
@@ -306,8 +265,7 @@ abstract class BaseWebservice
     }
 
     /**
-     * Set info
-     *
+     * Set info.
      * @param mixed $info
      */
     public function setInfo($info)
@@ -316,8 +274,7 @@ abstract class BaseWebservice
     }
 
     /**
-     * Get response
-     *
+     * Get response.
      * @return mixed
      */
     public function getResponse()
@@ -326,8 +283,7 @@ abstract class BaseWebservice
     }
 
     /**
-     * Set response
-     *
+     * Set response.
      * @param mixed $response
      */
     public function setResponse($response)
@@ -336,8 +292,7 @@ abstract class BaseWebservice
     }
 
     /**
-     * Get protocol
-     *
+     * Get protocol.
      * @return mixed
      */
     public function getProtocol()
@@ -346,22 +301,18 @@ abstract class BaseWebservice
     }
 
     /**
-     * Set protocol
-     *
+     * Set protocol.
      * @param $protocol
-     *
      * @return $this
      */
     public function setProtocol($protocol)
     {
         $this->protocol = $protocol;
-
         return $this;
     }
 
     /**
-     * Get parse from
-     *
+     * Get parse from.
      * @return mixed
      */
     public function getParseFrom()
@@ -370,22 +321,18 @@ abstract class BaseWebservice
     }
 
     /**
-     * Set parse from
-     *
+     * Set parse from.
      * @param mixed $parseFrom
-     *
      * @return $this
      */
     public function setParseFrom($parseFrom)
     {
         $this->parseFrom = $parseFrom;
-
         return $this;
     }
 
     /**
-     * Get result
-     *
+     * Get result.
      * @return mixed
      */
     public function getResult()
@@ -394,8 +341,7 @@ abstract class BaseWebservice
     }
 
     /**
-     * Set result
-     *
+     * Set result.
      * @param mixed $result
      */
     public function setResult($result)
@@ -409,6 +355,7 @@ abstract class BaseWebservice
     }
 
     /**
+     * Get headers.
      * @return array
      */
     public function getHeaders(): array
@@ -417,17 +364,18 @@ abstract class BaseWebservice
     }
 
     /**
+     * Set headers.
      * @param array $headers
      * @return $this
      */
     public function setHeaders(array $headers)
     {
         $this->headers = $headers;
-
         return $this;
     }
 
     /**
+     * Get errors.
      * @return array
      */
     public function getErrors()
@@ -436,28 +384,29 @@ abstract class BaseWebservice
     }
 
     /**
+     * Set errors.
      * @param $errors
      * @return $this
      */
     public function setErrors($errors)
     {
         $this->errors = $errors;
-
         return $this;
     }
 
     /**
+     * Set error.
      * @param $error
      * @return $this
      */
     public function setError($error)
     {
         $this->errors[] = $error;
-
         return $this;
     }
 
     /**
+     * Create and get new instance.
      * @return mixed
      */
     public function newInstance()

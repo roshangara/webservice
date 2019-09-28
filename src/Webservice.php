@@ -7,35 +7,35 @@ use Roshangara\Parser\Parser;
 class Webservice extends BaseWebservice
 {
 
+    /**
+     * Sender class list.
+     * @var array
+     */
     public static $senders = [
         'Rest' => RestSender::class,
         'Soap' => SoapSender::class,
     ];
 
     /**
-     * Parser
-     *
+     * Parser.
      * @var Parser
      */
     protected $parser;
 
     /**
-     * Start time
-     *
+     * Start time.
      * @var mixed
      */
     private $startTime;
 
     /**
-     * Total time
-     *
+     * Total time.
      * @var float
      */
     public $totalTime;
 
     /**
-     * Excepted Params
-     *
+     * Excepted Params.
      * @var array
      */
     public $exceptedParams = ['password', 'username', 'Password', 'Username', 'user', 'pass', 'webservice_username'];
@@ -46,13 +46,11 @@ class Webservice extends BaseWebservice
     public function __construct()
     {
         $this->parser = new Parser();
-
         $this->startTime = microtime(true);
     }
 
     /**
-     * Excepted params
-     *
+     * Excepted params.
      * @return array
      */
     public function getExceptedParams()
@@ -61,8 +59,7 @@ class Webservice extends BaseWebservice
     }
 
     /**
-     * Register sender
-     *
+     * Register sender.
      * @param $name
      * @param $class
      */
@@ -72,35 +69,27 @@ class Webservice extends BaseWebservice
     }
 
     /**
-     * Send data to server
+     * Call request.
      * @return mixed
      */
     public function send()
     {
 
         $this->beforeSend();
-
         (new static::$senders[$this->protocol]($this))->send();
-
-
         if (method_exists($this->parser, "from$this->parseFrom")) {
-
             $this->result = $this->parser->{"from$this->parseFrom"}($this->getResponse());
-
         }
-
         $this->afterSend();
-
         $afterName = "after" . ucfirst($this->function);
         if (method_exists($this, $afterName)) {
             $this->{"$afterName"}();
         }
-
         return $this->getResult();
     }
 
     /**
-     * Before send actions
+     * Before send actions.
      */
     protected function beforeSend()
     {
@@ -108,15 +97,12 @@ class Webservice extends BaseWebservice
     }
 
     /**
-     * After send actions
+     * After send actions.
      */
     protected function afterSend()
     {
-
         $this->totalTime = round(microtime(true) - $this->startTime, 3);
-
         event(new AfterSend($this));
-
     }
 
     /**

@@ -10,11 +10,11 @@ class Request extends Model
 
     protected $table = 'webservice_requests';
 
-    protected $fillable = ['class', 'function', 'method', 'protocol', 'contentType', 'url', 'group', 'sender', 'updated_at'];
+    protected $fillable = ['class', 'function', 'method', 'protocol', 'content_type', 'url', 'group', 'sender', 'updated_at'];
 
     /**
-     * Responses
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * Responses.
+     * @return mixed
      */
     public function responses()
     {

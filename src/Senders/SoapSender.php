@@ -12,7 +12,6 @@ class SoapSender extends Sender
     protected $client;
     /**
      * Soap default options
-     *
      * @return array
      */
     protected $defaultOptions = [
@@ -22,15 +21,12 @@ class SoapSender extends Sender
     ];
 
     /**
-     * Send soap request
-     *
+     * Send soap request.
      * @return mixed
      */
     public function send()
     {
-
         try {
-
             // open connection
             $this->client = new CurlSoapClient($this->webservice->getUrl(), $this->webservice->getOptions());
 
@@ -53,15 +49,10 @@ class SoapSender extends Sender
             $this->webservice->setInfo(curl_getinfo($this->client->curl));
 
             curl_close($this->client->curl);
-
-
         } catch (\Exception $soapFault) {
-
             $this->webservice->setStatus(Webservice::FAULT);
             $this->webservice->setError($soapFault->getMessage());
-
         }
-
         return $this->webservice->getResult();
     }
 }

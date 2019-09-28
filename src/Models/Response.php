@@ -10,22 +10,33 @@ class Response extends Model
 
     protected $table = 'webservice_responses';
 
-    protected $fillable = ['status', 'params', 'response', 'store', 'total_time', 'parsed_response',
-                           'info', 'headers', 'related_id', 'user_id', 'updated_at', 'errors'];
+    protected $fillable = [
+        'status',
+        'params',
+        'response',
+        'store',
+        'total_time',
+        'parsed_response',
+        'info',
+        'headers',
+        'related_id',
+        'user_id',
+        'updated_at',
+        'errors'
+    ];
 
     protected $casts = [
-        'params'          => 'json',
+        'params' => 'json',
         'errors' => 'json',
         'parsed_response' => 'json',
-        'info'            => 'json',
-        'headers'         => 'json',
+        'info' => 'json',
+        'headers' => 'json',
         'total_time' => 'float',
     ];
 
     /**
-     * Request
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * Request relation.
+     * @return mixed
      */
     public function request()
     {

@@ -31,8 +31,7 @@ class SaveInformation implements ShouldQueue
     }
 
     /**
-     * Get Request array
-     *
+     * Get Request array.
      * @param array $except
      * @return array
      */
@@ -44,15 +43,14 @@ class SaveInformation implements ShouldQueue
             'function'    => $this->webservice->getFunction(),
             'method'      => $this->webservice->getMethod(),
             'protocol'    => $this->webservice->getProtocol(),
-            'contentType' => $this->webservice->getParseFrom(),
+            'content_type' => $this->webservice->getParseFrom(),
             'url'         => $this->webservice->getUrl(),
             'sender'      => get_class($this->webservice),
         ], $except));
     }
 
     /**
-     * Get response array
-     *
+     * Get response array.
      * @param array $except
      * @return array
      */
@@ -73,12 +71,11 @@ class SaveInformation implements ShouldQueue
     }
 
     /**
-     * Save data to database
+     * Save data to database.
      */
     protected function save()
     {
         $request = Request::updateOrCreate($this->getRequestArray(), $this->getRequestArray() + ['updated_at' => Carbon::now()]);
-
         $request->responses()->updateOrCreate($this->getResponseArray(), $this->getResponseArray() + ['updated_at' => Carbon::now()]);
     }
 
