@@ -6,31 +6,28 @@ use Illuminate\Support\Facades\Schema;
 
 class CreateWebserviceResponsesTable extends Migration
 {
-
     public function up()
     {
         Schema::create('webservice_responses', function (Blueprint $table) {
-            $table->increments('id');
-
-            $table->integer('request_id')->unsigned();
-            $table->bigInteger('user_id')->unsigned()->nullable();
-
+            $table->bigIncrements('id');
             $table->enum('status', ['INIT', 'SEND', 'RECEIVE', 'FAULT', 'SUCCESS'])->default('INIT');
-            $table->json('params')->nullable();
-            $table->json('errors')->nullable();
-            $table->integer('related_id')->unsigned()->nullable();
+            $table->decimal('total_time')->nullable();
             $table->longText('response')->nullable();
             $table->string('store')->nullable();
-            $table->decimal('total_time')->nullable();
-            $table->json('parsed_response')->nullable();
             $table->json('info')->nullable();
+            $table->json('errors')->nullable();
             $table->json('headers')->nullable();
-
-            $table->softDeletes();
-            $table->timestamps();
-
-            $table->foreign('related_id')->references('id')->on('webservice_responses');
+            $table->json('parsed_response')->nullable();
+            $table->json('params')->nullable();
+            $table->bigInteger('request_id')->unsigned();
             $table->foreign('request_id')->references('id')->on('webservice_requests');
+            $table->bigInteger('related_id')->unsigned()->nullable();
+            $table->foreign('related_id')->references('id')->on('webservice_responses');
+            $table->bigInteger('user_id')->unsigned()->nullable();
+            $table->softDeletes();
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->useCurrent();
+
         });
     }
 

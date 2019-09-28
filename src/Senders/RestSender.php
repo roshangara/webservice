@@ -65,8 +65,7 @@ class RestSender extends Sender
     }
 
     /**
-     * Send url string
-     *
+     * Send url string.
      * @return string
      */
     protected function getUrl(): string
@@ -75,8 +74,7 @@ class RestSender extends Sender
     }
 
     /**
-     * Configuration
-     *
+     * Configuration.
      */
     protected function configuration()
     {
@@ -84,8 +82,7 @@ class RestSender extends Sender
     }
 
     /**
-     * return curl options
-     *
+     * return curl options.
      * @return array
      */
     protected function getOptions(): array

@@ -5,14 +5,15 @@ namespace Roshangara\Webservice;
 class BeforeSend
 {
 
-    /**
-     * @var $webservice Webservice
-     */
     protected $webservice;
 
+    /**
+     * BeforeSend constructor.
+     * @param $webservice
+     */
     public function __construct($webservice)
     {
         $this->webservice = $webservice;
-        $this->webservice->setResponse(is_object($this->webservice->getResponse())?:utf8_encode($this->webservice->getResponse()));
+        $this->webservice->setResponse(is_object($this->webservice->getResponse()) ?: utf8_encode($this->webservice->getResponse()));
     }
 }

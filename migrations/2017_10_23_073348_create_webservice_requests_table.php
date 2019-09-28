@@ -10,20 +10,18 @@ class CreateWebserviceRequestsTable extends Migration
     public function up()
     {
         Schema::create('webservice_requests', function (Blueprint $table) {
-            $table->increments('id');
-
+            $table->bigIncrements('id');
             $table->string('class', 50);
             $table->string('function', 50);
-            $table->string('method', 10);
             $table->string('group', 30)->nullable();
-
-            $table->string('protocol', 10);
-            $table->string('contentType', 20);
+            $table->enum('protocol', ['Soap', 'Rest'])->default('Rest');
+            $table->enum('method', ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS']);
+            $table->enum('content_type', ['json']);
             $table->string('url');
             $table->string('sender');
-
             $table->softDeletes();
-            $table->timestamps();
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->useCurrent();
         });
     }
 

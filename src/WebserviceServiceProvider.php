@@ -10,7 +10,6 @@ class WebserviceServiceProvider extends \Illuminate\Support\ServiceProvider
 
     /**
      * Bootstrap any application services.
-     *
      * @return void
      */
     public function boot()
@@ -28,13 +27,11 @@ class WebserviceServiceProvider extends \Illuminate\Support\ServiceProvider
 
     /**
      * Register the Horizon job events.
-     *
      * @return void
      */
     protected function registerEvents()
     {
         $events = $this->app->make(Dispatcher::class);
-
         foreach ($this->events as $event => $listeners) {
             foreach ($listeners as $listener) {
                 $events->listen($event, $listener);
